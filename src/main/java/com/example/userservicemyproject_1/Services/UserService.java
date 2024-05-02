@@ -83,4 +83,14 @@ public class UserService {
 
         tokensRepository.save(tokens);
     }
+
+    public Users validateToken(String tokenValue) throws InvalidTokenException {
+        Optional<Tokens> optionalTokens = tokensRepository.findByValueAndDeletedAndExpiryAtGreaterThan(tokenValue, false, new Date());
+
+        if (optionalTokens.isEmpty()) {
+            throw new InvalidTokenException("Token with value "+tokenValue+" is either expired or not found in DB.");
+        }
+
+        return optionalTokens.get().getUsers();
+    }
 }

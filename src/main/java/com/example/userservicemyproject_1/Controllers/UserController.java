@@ -9,6 +9,8 @@ import com.example.userservicemyproject_1.Services.UserService;
 import com.example.userservicemyproject_1.dtos.LoginRequestDTO;
 import com.example.userservicemyproject_1.dtos.LogoutRequestDTO;
 import com.example.userservicemyproject_1.dtos.SignUpRequestDTO;
+import com.example.userservicemyproject_1.dtos.UserDTO;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,4 +48,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/validate/{tokens}")
+    public UserDTO validateToken(@PathVariable("tokens")  @NonNull String tokenValue) throws InvalidTokenException {
+        return UserDTO.from(userService.validateToken(tokenValue));
+    }
 }
