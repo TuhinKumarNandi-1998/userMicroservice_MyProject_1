@@ -19,6 +19,7 @@ public class CustomerUserDetails implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+    private long userID;
 
     public CustomerUserDetails() {}
 
@@ -36,6 +37,15 @@ public class CustomerUserDetails implements UserDetails {
             authorityList.add(new CustomGrantedAuthority(roles));
         }
         this.authorities = authorityList;
+        this.userID = users.getId();
+    }
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
     }
 
     @Override
