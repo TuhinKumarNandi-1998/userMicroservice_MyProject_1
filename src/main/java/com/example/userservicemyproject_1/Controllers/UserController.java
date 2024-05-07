@@ -28,13 +28,15 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public Users signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
+    public UserDTO signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
         String email = signUpRequestDTO.getEmail();
         String password = signUpRequestDTO.getPassword();
         String name = signUpRequestDTO.getName();
 
 
-        return userService.signUp(email, password, name);
+        Users users = userService.signUp(email, password, name);
+
+        return UserDTO.from(users);
     }
 
     @PostMapping("/login")
